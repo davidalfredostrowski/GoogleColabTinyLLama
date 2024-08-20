@@ -416,3 +416,13 @@ print(result[0]['generated_text'])
 ```
 
 In this example, the user enters the command "exit" and the script will exit. The script will also prompt the user to enter a number between 1 and 100. The user will then enter the number and the script will output the sum of all the numbers from 1 to the entered number.
+
+
+
+### due to error in excecuation of model,
+### i referenced the following : 
+####https://discuss.huggingface.co/t/importerror-in-bitsandbytes-with-accelerate/80060
+
+
+
+
