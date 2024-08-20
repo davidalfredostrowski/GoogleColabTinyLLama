@@ -1,4 +1,14 @@
 
+### due to error in excecuation of model,
+### i referenced the following : 
+####https://discuss.huggingface.co/t/importerror-in-bitsandbytes-with-accelerate/80060
+
+
+
+!pip install -U bitsandbytes
+
+now verify runtime to include gpu and retart.
+
 Untitled6.ipynb
 Untitled6.ipynb_Notebook unstarred
 All changes saved
