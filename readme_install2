@@ -1,3 +1,11 @@
+# start with setting "runtime" to use gpu:
+# -> runtime
+#    -> change runtime type
+#       -> set T4 GPU
+# 
+
+
+
 
 ### due to error in excecuation of model,
 ### i referenced the following : 
@@ -8,6 +16,10 @@
 !pip install -U bitsandbytes
 
 now verify runtime to include gpu and retart.
+# -> run time 
+#    -> restart
+
+
 
 Untitled6.ipynb
 Untitled6.ipynb_Notebook unstarred
