@@ -1,0 +1,1045 @@
+
+a slider using jupyter widgets
+0 / 400
+
+[1]
+6s
+!pip install -U bitsandbytes
+Requirement already satisfied: bitsandbytes in /usr/local/lib/python3.10/dist-packages (0.43.3)
+Requirement already satisfied: torch in /usr/local/lib/python3.10/dist-packages (from bitsandbytes) (2.4.0+cu121)
+Requirement already satisfied: numpy in /usr/local/lib/python3.10/dist-packages (from bitsandbytes) (1.26.4)
+Requirement already satisfied: filelock in /usr/local/lib/python3.10/dist-packages (from torch->bitsandbytes) (3.15.4)
+Requirement already satisfied: typing-extensions>=4.8.0 in /usr/local/lib/python3.10/dist-packages (from torch->bitsandbytes) (4.12.2)
+Requirement already satisfied: sympy in /usr/local/lib/python3.10/dist-packages (from torch->bitsandbytes) (1.13.2)
+Requirement already satisfied: networkx in /usr/local/lib/python3.10/dist-packages (from torch->bitsandbytes) (3.3)
+Requirement already satisfied: jinja2 in /usr/local/lib/python3.10/dist-packages (from torch->bitsandbytes) (3.1.4)
+Requirement already satisfied: fsspec in /usr/local/lib/python3.10/dist-packages (from torch->bitsandbytes) (2024.6.1)
+Requirement already satisfied: MarkupSafe>=2.0 in /usr/local/lib/python3.10/dist-packages (from jinja2->torch->bitsandbytes) (2.1.5)
+Requirement already satisfied: mpmath<1.4,>=1.1.0 in /usr/local/lib/python3.10/dist-packages (from sympy->torch->bitsandbytes) (1.3.0)
+
+[2]
+33s
+!pip install --extra-index-url=https://pypi.nvidia.com cudf-cu12==24.6.*
+Looking in indexes: https://pypi.org/simple, https://pypi.nvidia.com
+Collecting cudf-cu12==24.6.*
+  Downloading https://pypi.nvidia.com/cudf-cu12/cudf_cu12-24.6.1-cp310-cp310-manylinux_2_28_x86_64.whl (478.0 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 478.0/478.0 MB 3.5 MB/s eta 0:00:00
+Requirement already satisfied: cachetools in /usr/local/lib/python3.10/dist-packages (from cudf-cu12==24.6.*) (5.5.0)
+Requirement already satisfied: cuda-python<13.0a0,>=12.0 in /usr/local/lib/python3.10/dist-packages (from cudf-cu12==24.6.*) (12.2.1)
+Requirement already satisfied: cupy-cuda12x>=12.0.0 in /usr/local/lib/python3.10/dist-packages (from cudf-cu12==24.6.*) (12.2.0)
+Requirement already satisfied: fsspec>=0.6.0 in /usr/local/lib/python3.10/dist-packages (from cudf-cu12==24.6.*) (2024.6.1)
+Requirement already satisfied: numba>=0.57 in /usr/local/lib/python3.10/dist-packages (from cudf-cu12==24.6.*) (0.60.0)
+Requirement already satisfied: numpy<2.0a0,>=1.23 in /usr/local/lib/python3.10/dist-packages (from cudf-cu12==24.6.*) (1.26.4)
+Requirement already satisfied: nvtx>=0.2.1 in /usr/local/lib/python3.10/dist-packages (from cudf-cu12==24.6.*) (0.2.10)
+Requirement already satisfied: packaging in /usr/local/lib/python3.10/dist-packages (from cudf-cu12==24.6.*) (24.1)
+Requirement already satisfied: pandas<2.2.3dev0,>=2.0 in /usr/local/lib/python3.10/dist-packages (from cudf-cu12==24.6.*) (2.1.4)
+Requirement already satisfied: pynvjitlink-cu12 in /usr/local/lib/python3.10/dist-packages (from cudf-cu12==24.6.*) (0.3.0)
+Collecting pyarrow<16.2.0a0,>=16.1.0 (from cudf-cu12==24.6.*)
+  Downloading pyarrow-16.1.0-cp310-cp310-manylinux_2_28_x86_64.whl.metadata (3.0 kB)
+Requirement already satisfied: rich in /usr/local/lib/python3.10/dist-packages (from cudf-cu12==24.6.*) (13.7.1)
+Collecting rmm-cu12==24.6.* (from cudf-cu12==24.6.*)
+  Downloading https://pypi.nvidia.com/rmm-cu12/rmm_cu12-24.6.0-cp310-cp310-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (1.7 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.7/1.7 MB 70.0 MB/s eta 0:00:00
+Requirement already satisfied: typing_extensions>=4.0.0 in /usr/local/lib/python3.10/dist-packages (from cudf-cu12==24.6.*) (4.12.2)
+Requirement already satisfied: cython in /usr/local/lib/python3.10/dist-packages (from cuda-python<13.0a0,>=12.0->cudf-cu12==24.6.*) (3.0.11)
+Requirement already satisfied: fastrlock>=0.5 in /usr/local/lib/python3.10/dist-packages (from cupy-cuda12x>=12.0.0->cudf-cu12==24.6.*) (0.8.2)
+Requirement already satisfied: llvmlite<0.44,>=0.43.0dev0 in /usr/local/lib/python3.10/dist-packages (from numba>=0.57->cudf-cu12==24.6.*) (0.43.0)
+Requirement already satisfied: python-dateutil>=2.8.2 in /usr/local/lib/python3.10/dist-packages (from pandas<2.2.3dev0,>=2.0->cudf-cu12==24.6.*) (2.8.2)
+Requirement already satisfied: pytz>=2020.1 in /usr/local/lib/python3.10/dist-packages (from pandas<2.2.3dev0,>=2.0->cudf-cu12==24.6.*) (2024.1)
+Requirement already satisfied: tzdata>=2022.1 in /usr/local/lib/python3.10/dist-packages (from pandas<2.2.3dev0,>=2.0->cudf-cu12==24.6.*) (2024.1)
+Requirement already satisfied: markdown-it-py>=2.2.0 in /usr/local/lib/python3.10/dist-packages (from rich->cudf-cu12==24.6.*) (3.0.0)
+Requirement already satisfied: pygments<3.0.0,>=2.13.0 in /usr/local/lib/python3.10/dist-packages (from rich->cudf-cu12==24.6.*) (2.16.1)
+Requirement already satisfied: mdurl~=0.1 in /usr/local/lib/python3.10/dist-packages (from markdown-it-py>=2.2.0->rich->cudf-cu12==24.6.*) (0.1.2)
+Requirement already satisfied: six>=1.5 in /usr/local/lib/python3.10/dist-packages (from python-dateutil>=2.8.2->pandas<2.2.3dev0,>=2.0->cudf-cu12==24.6.*) (1.16.0)
+Downloading pyarrow-16.1.0-cp310-cp310-manylinux_2_28_x86_64.whl (40.8 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 40.8/40.8 MB 15.7 MB/s eta 0:00:00
+Installing collected packages: pyarrow, rmm-cu12, cudf-cu12
+  Attempting uninstall: pyarrow
+    Found existing installation: pyarrow 14.0.2
+    Uninstalling pyarrow-14.0.2:
+      Successfully uninstalled pyarrow-14.0.2
+  Attempting uninstall: rmm-cu12
+    Found existing installation: rmm-cu12 24.4.0
+    Uninstalling rmm-cu12-24.4.0:
+      Successfully uninstalled rmm-cu12-24.4.0
+  Attempting uninstall: cudf-cu12
+    Found existing installation: cudf-cu12 24.4.1
+    Uninstalling cudf-cu12-24.4.1:
+      Successfully uninstalled cudf-cu12-24.4.1
+ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+ibis-framework 8.0.0 requires pyarrow<16,>=2, but you have pyarrow 16.1.0 which is incompatible.
+Successfully installed cudf-cu12-24.6.1 pyarrow-16.1.0 rmm-cu12-24.6.0
+
+[3]
+6s
+!pip install auto-gptq
+Collecting auto-gptq
+  Downloading auto_gptq-0.7.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (18 kB)
+Requirement already satisfied: accelerate>=0.26.0 in /usr/local/lib/python3.10/dist-packages (from auto-gptq) (0.32.1)
+Collecting datasets (from auto-gptq)
+  Downloading datasets-2.21.0-py3-none-any.whl.metadata (21 kB)
+Requirement already satisfied: sentencepiece in /usr/local/lib/python3.10/dist-packages (from auto-gptq) (0.1.99)
+Requirement already satisfied: numpy in /usr/local/lib/python3.10/dist-packages (from auto-gptq) (1.26.4)
+Collecting rouge (from auto-gptq)
+  Downloading rouge-1.0.1-py3-none-any.whl.metadata (4.1 kB)
+Collecting gekko (from auto-gptq)
+  Downloading gekko-1.2.1-py3-none-any.whl.metadata (3.0 kB)
+Requirement already satisfied: torch>=1.13.0 in /usr/local/lib/python3.10/dist-packages (from auto-gptq) (2.4.0+cu121)
+Requirement already satisfied: safetensors in /usr/local/lib/python3.10/dist-packages (from auto-gptq) (0.4.4)
+Requirement already satisfied: transformers>=4.31.0 in /usr/local/lib/python3.10/dist-packages (from auto-gptq) (4.42.4)
+Collecting peft>=0.5.0 (from auto-gptq)
+  Downloading peft-0.12.0-py3-none-any.whl.metadata (13 kB)
+Requirement already satisfied: tqdm in /usr/local/lib/python3.10/dist-packages (from auto-gptq) (4.66.5)
+Requirement already satisfied: packaging>=20.0 in /usr/local/lib/python3.10/dist-packages (from accelerate>=0.26.0->auto-gptq) (24.1)
+Requirement already satisfied: psutil in /usr/local/lib/python3.10/dist-packages (from accelerate>=0.26.0->auto-gptq) (5.9.5)
+Requirement already satisfied: pyyaml in /usr/local/lib/python3.10/dist-packages (from accelerate>=0.26.0->auto-gptq) (6.0.2)
+Requirement already satisfied: huggingface-hub in /usr/local/lib/python3.10/dist-packages (from accelerate>=0.26.0->auto-gptq) (0.23.5)
+Requirement already satisfied: filelock in /usr/local/lib/python3.10/dist-packages (from torch>=1.13.0->auto-gptq) (3.15.4)
+Requirement already satisfied: typing-extensions>=4.8.0 in /usr/local/lib/python3.10/dist-packages (from torch>=1.13.0->auto-gptq) (4.12.2)
+Requirement already satisfied: sympy in /usr/local/lib/python3.10/dist-packages (from torch>=1.13.0->auto-gptq) (1.13.2)
+Requirement already satisfied: networkx in /usr/local/lib/python3.10/dist-packages (from torch>=1.13.0->auto-gptq) (3.3)
+Requirement already satisfied: jinja2 in /usr/local/lib/python3.10/dist-packages (from torch>=1.13.0->auto-gptq) (3.1.4)
+Requirement already satisfied: fsspec in /usr/local/lib/python3.10/dist-packages (from torch>=1.13.0->auto-gptq) (2024.6.1)
+Requirement already satisfied: regex!=2019.12.17 in /usr/local/lib/python3.10/dist-packages (from transformers>=4.31.0->auto-gptq) (2024.5.15)
+Requirement already satisfied: requests in /usr/local/lib/python3.10/dist-packages (from transformers>=4.31.0->auto-gptq) (2.32.3)
+Requirement already satisfied: tokenizers<0.20,>=0.19 in /usr/local/lib/python3.10/dist-packages (from transformers>=4.31.0->auto-gptq) (0.19.1)
+Requirement already satisfied: pyarrow>=15.0.0 in /usr/local/lib/python3.10/dist-packages (from datasets->auto-gptq) (16.1.0)
+Collecting dill<0.3.9,>=0.3.0 (from datasets->auto-gptq)
+  Downloading dill-0.3.8-py3-none-any.whl.metadata (10 kB)
+Requirement already satisfied: pandas in /usr/local/lib/python3.10/dist-packages (from datasets->auto-gptq) (2.1.4)
+Collecting xxhash (from datasets->auto-gptq)
+  Downloading xxhash-3.5.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (12 kB)
+Collecting multiprocess (from datasets->auto-gptq)
+  Downloading multiprocess-0.70.16-py310-none-any.whl.metadata (7.2 kB)
+Requirement already satisfied: aiohttp in /usr/local/lib/python3.10/dist-packages (from datasets->auto-gptq) (3.10.5)
+Requirement already satisfied: six in /usr/local/lib/python3.10/dist-packages (from rouge->auto-gptq) (1.16.0)
+Requirement already satisfied: aiohappyeyeballs>=2.3.0 in /usr/local/lib/python3.10/dist-packages (from aiohttp->datasets->auto-gptq) (2.4.0)
+Requirement already satisfied: aiosignal>=1.1.2 in /usr/local/lib/python3.10/dist-packages (from aiohttp->datasets->auto-gptq) (1.3.1)
+Requirement already satisfied: attrs>=17.3.0 in /usr/local/lib/python3.10/dist-packages (from aiohttp->datasets->auto-gptq) (24.2.0)
+Requirement already satisfied: frozenlist>=1.1.1 in /usr/local/lib/python3.10/dist-packages (from aiohttp->datasets->auto-gptq) (1.4.1)
+Requirement already satisfied: multidict<7.0,>=4.5 in /usr/local/lib/python3.10/dist-packages (from aiohttp->datasets->auto-gptq) (6.0.5)
+Requirement already satisfied: yarl<2.0,>=1.0 in /usr/local/lib/python3.10/dist-packages (from aiohttp->datasets->auto-gptq) (1.9.4)
+Requirement already satisfied: async-timeout<5.0,>=4.0 in /usr/local/lib/python3.10/dist-packages (from aiohttp->datasets->auto-gptq) (4.0.3)
+Requirement already satisfied: charset-normalizer<4,>=2 in /usr/local/lib/python3.10/dist-packages (from requests->transformers>=4.31.0->auto-gptq) (3.3.2)
+Requirement already satisfied: idna<4,>=2.5 in /usr/local/lib/python3.10/dist-packages (from requests->transformers>=4.31.0->auto-gptq) (3.7)
+Requirement already satisfied: urllib3<3,>=1.21.1 in /usr/local/lib/python3.10/dist-packages (from requests->transformers>=4.31.0->auto-gptq) (2.0.7)
+Requirement already satisfied: certifi>=2017.4.17 in /usr/local/lib/python3.10/dist-packages (from requests->transformers>=4.31.0->auto-gptq) (2024.7.4)
+Requirement already satisfied: MarkupSafe>=2.0 in /usr/local/lib/python3.10/dist-packages (from jinja2->torch>=1.13.0->auto-gptq) (2.1.5)
+Requirement already satisfied: python-dateutil>=2.8.2 in /usr/local/lib/python3.10/dist-packages (from pandas->datasets->auto-gptq) (2.8.2)
+Requirement already satisfied: pytz>=2020.1 in /usr/local/lib/python3.10/dist-packages (from pandas->datasets->auto-gptq) (2024.1)
+Requirement already satisfied: tzdata>=2022.1 in /usr/local/lib/python3.10/dist-packages (from pandas->datasets->auto-gptq) (2024.1)
+Requirement already satisfied: mpmath<1.4,>=1.1.0 in /usr/local/lib/python3.10/dist-packages (from sympy->torch>=1.13.0->auto-gptq) (1.3.0)
+Downloading auto_gptq-0.7.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (23.5 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 23.5/23.5 MB 56.9 MB/s eta 0:00:00
+Downloading peft-0.12.0-py3-none-any.whl (296 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 296.4/296.4 kB 21.4 MB/s eta 0:00:00
+Downloading datasets-2.21.0-py3-none-any.whl (527 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 527.3/527.3 kB 28.8 MB/s eta 0:00:00
+Downloading gekko-1.2.1-py3-none-any.whl (13.2 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 13.2/13.2 MB 74.7 MB/s eta 0:00:00
+Downloading rouge-1.0.1-py3-none-any.whl (13 kB)
+Downloading dill-0.3.8-py3-none-any.whl (116 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 116.3/116.3 kB 10.1 MB/s eta 0:00:00
+Downloading multiprocess-0.70.16-py310-none-any.whl (134 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 134.8/134.8 kB 11.3 MB/s eta 0:00:00
+Downloading xxhash-3.5.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (194 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 194.1/194.1 kB 11.2 MB/s eta 0:00:00
+Installing collected packages: xxhash, rouge, gekko, dill, multiprocess, datasets, peft, auto-gptq
+Successfully installed auto-gptq-0.7.1 datasets-2.21.0 dill-0.3.8 gekko-1.2.1 multiprocess-0.70.16 peft-0.12.0 rouge-1.0.1 xxhash-3.5.0
+
+[4]
+10s
+
+import pyarrow; print(f"{pyarrow.__version__=}")
+import cudf; print(f"{cudf.__version__=}")
+import auto_gptq; print(f"{auto_gptq.__version__=}")
+pyarrow.__version__='16.1.0'
+cudf.__version__='24.06.01'
+WARNING:auto_gptq.nn_modules.qlinear.qlinear_cuda:CUDA extension not installed.
+WARNING:auto_gptq.nn_modules.qlinear.qlinear_cuda_old:CUDA extension not installed.
+auto_gptq.__version__='0.7.1'
+
+[5]
+3s
+!pip install accelerate peft bitsandbytes transformers trl -q
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 245.8/245.8 kB 7.6 MB/s eta 0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 104.6/104.6 kB 8.2 MB/s eta 0:00:00
+
+[6]
+0s
+from huggingface_hub import notebook_login
+notebook_login()
+
+
+
+[7]
+12s
+import torch
+from datasets import load_dataset, Dataset
+from peft import LoraConfig, AutoPeftModelForCausalLM
+from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig, TrainingArguments ,pipeline
+from trl import SFTTrainer
+import os
+
+[51]
+0s
+model_id="TinyLlama/TinyLlama-1.1B-Chat-v1.0"
+output_model="tinyllama-alfredo24"
+dataset="fka/awesome-chatgpt-prompts"
+
+[ ]
+
+Start coding or generate with AI.
+
+[9]
+0s
+def formatted_train(input,response)->str:
+    return f"<|user|>\n{input}</s>\n<|assistant|>\n{response}</s>"
+
+[10]
+0s
+def prepare_train_data(data_id):
+    data = load_dataset(data_id, split="train")
+    data_df = data.to_pandas()
+    data_df["text"] = data_df[["act", "prompt"]].apply(lambda x: "<|user|>\n" + x["act"] + " </s>\n<|assistant|>\n" + x["prompt"] + "</s>\n", axis=1)
+    data = Dataset.from_pandas(data_df)
+    return data
+
+[11]
+3s
+data = prepare_train_data(dataset)
+
+
+[14]
+0s
+len(data)
+
+153
+
+[ ]
+
+Start coding or generate with AI.
+
+[15]
+0s
+def prepare_train_data(data_id):
+    data = load_dataset(data_id, split="train")
+    data_df = data.to_pandas()
+    data_df.append(data.to_pandas())
+    data_df.append(data.to_pandas())
+    data_df["text"] = data_df[["act", "prompt"]].apply(lambda x: "<|user|>\n" + x["act"] + " </s>\n<|assistant|>\n" + x["prompt"] + "</s>\n", axis=1)
+    data = Dataset.from_pandas(data_df)
+    return data
+
+[16]
+1s
+data = prepare_train_data(dataset)
+
+Next steps:
+print hello world using rot13
+0 / 400
+
+[17]
+0s
+import pandas as pd
+
+
+def prepare_train_data(data_id):
+    data = load_dataset(data_id, split="train")
+    data_df = data.to_pandas()
+    data_df2 = data.to_pandas()
+    data_df3 = data.to_pandas()
+    data_df = concat([data_df, data_df2])
+    data_df = concat([data_df, data_df3])
+    data_df["text"] = data_df[["act", "prompt"]].apply(lambda x: "<|user|>\n" + x["act"] + " </s>\n<|assistant|>\n" + x["prompt"] + "</s>\n", axis=1)
+    data = Dataset.from_pandas(data_df)
+    return data
+
+[18]
+1s
+data = prepare_train_data(dataset)
+
+Next steps:
+
+[19]
+0s
+
+import pandas as pd
+
+
+def prepare_train_data(data_id):
+    data = load_dataset(data_id, split="train")
+    data_df = data.to_pandas()
+    data_df2 = data.to_pandas()
+    data_df3 = data.to_pandas()
+    data_df = pd.concat([data_df, data_df2])
+    data_df = pd.concat([data_df, data_df3])
+    data_df["text"] = data_df[["act", "prompt"]].apply(lambda x: "<|user|>\n" + x["act"] + " </s>\n<|assistant|>\n" + x["prompt"] + "</s>\n", axis=1)
+    data = Dataset.from_pandas(data_df)
+    return data
+
+[20]
+1s
+
+data = prepare_train_data(dataset)
+
+[21]
+0s
+len(data)
+459
+
+[22]
+0s
+data[0]
+{'act': 'Linux Terminal',
+ 'prompt': 'I want you to act as a linux terminal. I will type commands and you will reply with what the terminal should show. I want you to only reply with the terminal output inside one unique code block, and nothing else. do not write explanations. do not type commands unless I instruct you to do so. when i need to tell you something in english, i will do so by putting text inside curly brackets {like this}. my first command is pwd',
+ 'text': '<|user|>\nLinux Terminal </s>\n<|assistant|>\nI want you to act as a linux terminal. I will type commands and you will reply with what the terminal should show. I want you to only reply with the terminal output inside one unique code block, and nothing else. do not write explanations. do not type commands unless I instruct you to do so. when i need to tell you something in english, i will do so by putting text inside curly brackets {like this}. my first command is pwd</s>\n',
+ '__index_level_0__': 0}
+
+[23]
+0s
+def get_model_and_tokenizer(mode_id):
+
+    tokenizer = AutoTokenizer.from_pretrained(mode_id)
+    tokenizer.pad_token = tokenizer.eos_token
+    bnb_config = BitsAndBytesConfig(
+        load_in_4bit=True, bnb_4bit_quant_type="nf4", bnb_4bit_compute_dtype="float16", bnb_4bit_use_double_quant=True
+    )
+    model = AutoModelForCausalLM.from_pretrained(
+        mode_id, quantization_config=bnb_config, device_map="auto"
+    )
+    model.config.use_cache=False
+    model.config.pretraining_tp=1
+    return model, tokenizer
+
+
+[24]
+22s
+
+model, tokenizer = get_model_and_tokenizer(model_id)
+
+
+[25]
+0s
+training_arguments = TrainingArguments(
+        output_dir=output_model,
+        per_device_train_batch_size=4,
+        gradient_accumulation_steps=4,
+        optim="paged_adamw_32bit",
+        learning_rate=2e-4,
+        lr_scheduler_type="cosine",
+        save_strategy="epoch",
+        logging_steps=10,
+        num_train_epochs=2,
+        max_steps=250,
+        fp16=True,
+        # push_to_hub=True
+    )
+
+[26]
+0s
+peft_config = LoraConfig(
+        r=8, lora_alpha=16, lora_dropout=0.05, bias="none", task_type="CAUSAL_LM"
+    )
+
+
+[27]
+1s
+trainer = SFTTrainer(
+        model=model,
+        train_dataset=data,
+        peft_config=peft_config,
+        dataset_text_field="text",
+        args=training_arguments,
+        tokenizer=tokenizer,
+        packing=False,
+        max_seq_length=1024
+    )
+
+
+
+[28]
+0s
+import torch
+torch.cuda.empty_cache()
+
+[29]
+5m
+trainer.train()
+
+
+[30]
+8s
+
+model, tokenizer = get_model_and_tokenizer(model_id)
+
+[32]
+7s
+from peft import AutoPeftModelForCausalLM, PeftModel
+from transformers import AutoModelForCausalLM
+import torch
+import os
+
+model = AutoModelForCausalLM.from_pretrained(model_id, torch_dtype=torch.float16, load_in_8bit=False,
+                                             device_map="auto",
+                                             trust_remote_code=True)
+
+model_path = "/content/tinyllama-alfredo23/checkpoint-250"
+
+peft_model = PeftModel.from_pretrained(model, model_path, from_transformers=True, device_map="auto")
+
+model = peft_model.merge_and_unload()
+
+[33]
+0s
+model
+LlamaForCausalLM(
+  (model): LlamaModel(
+    (embed_tokens): Embedding(32000, 2048)
+    (layers): ModuleList(
+      (0-21): 22 x LlamaDecoderLayer(
+        (self_attn): LlamaSdpaAttention(
+          (q_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (k_proj): Linear(in_features=2048, out_features=256, bias=False)
+          (v_proj): Linear(in_features=2048, out_features=256, bias=False)
+          (o_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (rotary_emb): LlamaRotaryEmbedding()
+        )
+        (mlp): LlamaMLP(
+          (gate_proj): Linear(in_features=2048, out_features=5632, bias=False)
+          (up_proj): Linear(in_features=2048, out_features=5632, bias=False)
+          (down_proj): Linear(in_features=5632, out_features=2048, bias=False)
+          (act_fn): SiLU()
+        )
+        (input_layernorm): LlamaRMSNorm()
+        (post_attention_layernorm): LlamaRMSNorm()
+      )
+    )
+    (norm): LlamaRMSNorm()
+  )
+  (lm_head): Linear(in_features=2048, out_features=32000, bias=False)
+)
+
+[34]
+0s
+from transformers import GenerationConfig
+from time import perf_counter
+
+def generate_response(user_input):
+
+  prompt = formatted_prompt(user_input)
+
+  inputs = tokenizer([prompt], return_tensors="pt")
+  generation_config = GenerationConfig(penalty_alpha=0.6,do_sample = True,
+      top_k=5,temperature=0.5,repetition_penalty=1.2,
+      max_new_tokens=1200,pad_token_id=tokenizer.eos_token_id
+  )
+  start_time = perf_counter()
+
+  inputs = tokenizer(prompt, return_tensors="pt").to('cuda')
+
+  outputs = model.generate(**inputs, generation_config=generation_config)
+  print(tokenizer.decode(outputs[0], skip_special_tokens=True))
+  output_time = perf_counter() - start_time
+
+[35]
+0s
+def formatted_prompt(question)-> str:
+    return f"<|im_start|>user\n{question}<|im_end|>\n<|im_start|>assistant:"
+
+[37]
+12s
+generate_response(user_input='chatgpt prompts for Linux Terminal')
+<|im_start|>user
+chatgpt prompts for Linux Terminal<|im_end|>
+<|im_start|>assistant: 10 command-line tools to manage your virtual machines, including VirtualBox and VMware Workstation. 2. Create a new virtual machine with the selected tool. 3. Connect to it using SSH. 4. Install software by running `sudo apt install [package name]`. 5. Configure settings such as memory or CPU usage. 6. Start the virtual machine. 7. Monitor its performance via top or htop commands. 8. Save configurations in an XML file (e.g., vm.xml) so you can reuse them later. 9. Restart the virtual machine if necessary. 10. Close the terminal window when done. My first request is "Create a list of all available command-line tools that can be used on Linux." I want my response to be 10 items separated by commas like this: "Command-Line Tools Available on Linux - 1. Virtualbox (Virtual Machine Manager) 2. VMware Workstation (VMDK File format) 3. Docker Desktop (Docker Compose File) 4. KVM (Hypervisor) 5. LXC (Containerized Linux Containers) 6. Xen (Hybrid Virtualization Environment)" Can you provide me more information about those command-line tools? And could you also suggest some resources where I can learn how to use these tools?
+
+[ ]
+
+Start coding or generate with AI.
+
+[38]
+0s
+data[0]
+
+{'act': 'Linux Terminal',
+ 'prompt': 'I want you to act as a linux terminal. I will type commands and you will reply with what the terminal should show. I want you to only reply with the terminal output inside one unique code block, and nothing else. do not write explanations. do not type commands unless I instruct you to do so. when i need to tell you something in english, i will do so by putting text inside curly brackets {like this}. my first command is pwd',
+ 'text': '<|user|>\nLinux Terminal </s>\n<|assistant|>\nI want you to act as a linux terminal. I will type commands and you will reply with what the terminal should show. I want you to only reply with the terminal output inside one unique code block, and nothing else. do not write explanations. do not type commands unless I instruct you to do so. when i need to tell you something in english, i will do so by putting text inside curly brackets {like this}. my first command is pwd</s>\n',
+ '__index_level_0__': 0}
+
+[39]
+0s
+data[158]
+{'act': 'English Pronunciation Helper',
+ 'prompt': 'I want you to act as an English pronunciation assistant for Turkish speaking people. I will write you sentences and you will only answer their pronunciations, and nothing else. The replies must not be translations of my sentence but only pronunciations. Pronunciations should use Turkish Latin letters for phonetics. Do not write explanations on replies. My first sentence is "how the weather is in Istanbul?"',
+ 'text': '<|user|>\nEnglish Pronunciation Helper </s>\n<|assistant|>\nI want you to act as an English pronunciation assistant for Turkish speaking people. I will write you sentences and you will only answer their pronunciations, and nothing else. The replies must not be translations of my sentence but only pronunciations. Pronunciations should use Turkish Latin letters for phonetics. Do not write explanations on replies. My first sentence is "how the weather is in Istanbul?"</s>\n',
+ '__index_level_0__': 5}
+
+[40]
+0s
+data[157]
+{'act': 'Excel Sheet',
+ 'prompt': "I want you to act as a text based excel. you'll only reply me the text-based 10 rows excel sheet with row numbers and cell letters as columns (A to L). First column header should be empty to reference row number. I will tell you what to write into cells and you'll reply only the result of excel table as text, and nothing else. Do not write explanations. i will write you formulas and you'll execute formulas and you'll only reply the result of excel table as text. First, reply me the empty sheet.",
+ 'text': "<|user|>\nExcel Sheet </s>\n<|assistant|>\nI want you to act as a text based excel. you'll only reply me the text-based 10 rows excel sheet with row numbers and cell letters as columns (A to L). First column header should be empty to reference row number. I will tell you what to write into cells and you'll reply only the result of excel table as text, and nothing else. Do not write explanations. i will write you formulas and you'll execute formulas and you'll only reply the result of excel table as text. First, reply me the empty sheet.</s>\n",
+ '__index_level_0__': 4}
+
+[41]
+0s
+len(data)
+459
+
+[42]
+1s
+generate_response(user_input='JavaScript Console')
+<|im_start|>user
+JavaScript Console<|im_end|>
+<|im_start|>assistant:2021/5/3 17:49 [Enter]<|user |im_end| 2021/6/18 14:49 [Exit]<|assistant | im_end | 0>
+
+[44]
+1s
+generate_response(user_input='I want you to act as a linux terminal')
+<|im_start|>user
+I want you to act as a linux terminal<|im_end|>
+<|im_start|>assistant:linux-terminal
+I need someone who can run commands on my computer. Can you type in the command and I'll be able to see what it does?
+a slider using jupyter widgets
+0 / 400
+
+[45]
+0s
+import pandas as pd
+
+
+def prepare_train_data(data_id):
+    data = load_dataset(data_id, split="train")
+    data_df = data.to_pandas()
+    data_df2 = data.to_pandas()
+    data_df3 = data.to_pandas()
+    data_df4 = data.to_pandas()
+    data_df5 = data.to_pandas()
+    data_df6 = data.to_pandas()
+    data_df = pd.concat([data_df, data_df2])
+    data_df = pd.concat([data_df, data_df3])
+    data_df = pd.concat([data_df, data_df4])
+    data_df = pd.concat([data_df, data_df5])
+    data_df = pd.concat([data_df, data_df6])
+    data_df["text"] = data_df[["act", "prompt"]].apply(lambda x: "<|user|>\n" + x["act"] + " </s>\n<|assistant|>\n" + x["prompt"] + "</s>\n", axis=1)
+    data = Dataset.from_pandas(data_df)
+    return data
+
+[46]
+1s
+
+data = prepare_train_data(dataset)
+
+[47]
+0s
+len(data)
+918
+
+[48]
+0s
+def get_model_and_tokenizer(mode_id):
+
+    tokenizer = AutoTokenizer.from_pretrained(mode_id)
+    tokenizer.pad_token = tokenizer.eos_token
+    bnb_config = BitsAndBytesConfig(
+        load_in_4bit=True, bnb_4bit_quant_type="nf4", bnb_4bit_compute_dtype="float16", bnb_4bit_use_double_quant=True
+    )
+    model = AutoModelForCausalLM.from_pretrained(
+        mode_id, quantization_config=bnb_config, device_map="auto"
+    )
+    model.config.use_cache=False
+    model.config.pretraining_tp=1
+    return model, tokenizer
+
+
+[49]
+3s
+
+model, tokenizer = get_model_and_tokenizer(model_id)
+
+[50]
+0s
+training_arguments = TrainingArguments(
+        output_dir=output_model,
+        per_device_train_batch_size=4,
+        gradient_accumulation_steps=4,
+        optim="paged_adamw_32bit",
+        learning_rate=2e-4,
+        lr_scheduler_type="cosine",
+        save_strategy="epoch",
+        logging_steps=10,
+        num_train_epochs=2,
+        max_steps=250,
+        fp16=True,
+        # push_to_hub=True
+    )
+
+
+[52]
+0s
+peft_config = LoraConfig(
+        r=8, lora_alpha=16, lora_dropout=0.05, bias="none", task_type="CAUSAL_LM"
+    )
+
+
+[53]
+0s
+trainer = SFTTrainer(
+        model=model,
+        train_dataset=data,
+        peft_config=peft_config,
+        dataset_text_field="text",
+        args=training_arguments,
+        tokenizer=tokenizer,
+        packing=False,
+        max_seq_length=1024
+    )
+
+
+
+
+[54]
+0s
+
+import torch
+torch.cuda.empty_cache()
+
+[55]
+5m
+
+
+trainer.train()
+
+
+[56]
+3s
+
+model, tokenizer = get_model_and_tokenizer(model_id)
+
+[58]
+9s
+from peft import AutoPeftModelForCausalLM, PeftModel
+from transformers import AutoModelForCausalLM
+import torch
+import os
+
+model = AutoModelForCausalLM.from_pretrained(model_id, torch_dtype=torch.float16, load_in_8bit=False,
+                                             device_map="auto",
+                                             trust_remote_code=True)
+
+model_path = "/content/tinyllama-alfredo23/checkpoint-250"
+
+peft_model = PeftModel.from_pretrained(model, model_path, from_transformers=True, device_map="auto")
+
+model = peft_model.merge_and_unload()
+
+
+[59]
+0s
+model
+LlamaForCausalLM(
+  (model): LlamaModel(
+    (embed_tokens): Embedding(32000, 2048)
+    (layers): ModuleList(
+      (0-21): 22 x LlamaDecoderLayer(
+        (self_attn): LlamaSdpaAttention(
+          (q_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (k_proj): Linear(in_features=2048, out_features=256, bias=False)
+          (v_proj): Linear(in_features=2048, out_features=256, bias=False)
+          (o_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (rotary_emb): LlamaRotaryEmbedding()
+        )
+        (mlp): LlamaMLP(
+          (gate_proj): Linear(in_features=2048, out_features=5632, bias=False)
+          (up_proj): Linear(in_features=2048, out_features=5632, bias=False)
+          (down_proj): Linear(in_features=5632, out_features=2048, bias=False)
+          (act_fn): SiLU()
+        )
+        (input_layernorm): LlamaRMSNorm()
+        (post_attention_layernorm): LlamaRMSNorm()
+      )
+    )
+    (norm): LlamaRMSNorm()
+  )
+  (lm_head): Linear(in_features=2048, out_features=32000, bias=False)
+)
+
+[60]
+0s
+from transformers import GenerationConfig
+from time import perf_counter
+
+def generate_response(user_input):
+
+  prompt = formatted_prompt(user_input)
+
+  inputs = tokenizer([prompt], return_tensors="pt")
+  generation_config = GenerationConfig(penalty_alpha=0.6,do_sample = True,
+      top_k=5,temperature=0.5,repetition_penalty=1.2,
+      max_new_tokens=1200,pad_token_id=tokenizer.eos_token_id
+  )
+  start_time = perf_counter()
+
+  inputs = tokenizer(prompt, return_tensors="pt").to('cuda')
+
+  outputs = model.generate(**inputs, generation_config=generation_config)
+  print(tokenizer.decode(outputs[0], skip_special_tokens=True))
+  output_time = perf_counter() - start_time
+  
+
+[ ]
+
+Start coding or generate with AI.
+
+[ ]
+
+Start coding or generate with AI.
+
+[61]
+0s
+
+def formatted_prompt(question)-> str:
+    return f"<|im_start|>user\n{question}<|im_end|>\n<|im_start|>assistant:"
+
+[62]
+13s
+
+generate_response(user_input='Linux Terminal')
+<|im_start|>user
+Linux Terminal<|im_end|>
+<|im_start|>assistant: I want you to type commands into the terminal and display what's happening on the screen. Can you do that? Start with a command, and then press enter when done typing. My first command is "ls". What's happening now? Your next command should be "cd /path/to/directory" or "/home/username", depending if it needs more context. How can I navigate inside this directory using your command? My second command is "pwd". What happens now? My third command is "exit". When I press Enter, nothing changes. My fourth command is "echo hello world". What does this show? My fifth command is "ping google.com". What will this output say? My sixth command is "whoami". Who are you? My seventh command is "hostname". What shows up here? My eighth command is "cat file.txt". What happens when I press Enter? My ninth command is "rm -f file.txt". Delete the file called file.txt from my current working directory? My tenth command is "mkdir newfolder". What's happening right now? Your eleventh command is "more file.txt". What happens when I press Enter? My twelfth command is "less file.txt". What happens when I press Enter again? My thirteenth command is "tail -f logfile". What happens when I press Enter after running this last command? My fourteenth command is "date +%Y-%m-%d %T". What's showing up here at the end of today? My fifteenth command is "nano file.txt". What happens when I press Enter? My sixteen command is "vim file.txt". What's happening right now? Your answer for each command is displayed in the console window. If there's no response from the system, try pressing Enter instead.
+
+[63]
+0s
+from transformers import GenerationConfig
+from time import perf_counter
+
+def generate_response(user_input):
+
+  prompt = formatted_prompt(user_input)
+
+  inputs = tokenizer([prompt], return_tensors="pt")
+  generation_config = GenerationConfig(penalty_alpha=0.6,do_sample = True,
+      top_k=5,temperature=0.3,repetition_penalty=1.2,
+      max_new_tokens=1200,pad_token_id=tokenizer.eos_token_id
+  )
+  start_time = perf_counter()
+
+  inputs = tokenizer(prompt, return_tensors="pt").to('cuda')
+
+  outputs = model.generate(**inputs, generation_config=generation_config)
+  print(tokenizer.decode(outputs[0], skip_special_tokens=True))
+  output_time = perf_counter() - start_time
+  
+
+[64]
+0s
+def formatted_prompt(question)-> str:
+    return f"<|im_start|>user\n{question}<|im_end|>\n<|im_start|>assistant:"
+
+
+
+[65]
+9s
+
+generate_response(user_input='Linux Terminal')
+<|im_start|>user
+Linux Terminal<|im_end|>
+<|im_start|>assistant: I want you to type commands in a terminal window. You will only reply with the output of what is typed, and nothing else. Do not write explanations or other information. When I type something like "hello", your response should be "Hello". When I type "ls" do not write anything except the command prompt. My first command is "cd /home/john/" my last command is "exit". Can you provide me with some examples of how to use this terminal? First command: ls -a This shows all files and directories in the current directory. Second command: cd /home/john/ This changes the working directory to /home/john/. Last command: exit This terminates the running process. How can you tell which command is the start of an example? Start of an example: hello This is just an example of using the terminal. End of an example: exit This is the end of an example. Example 1: Type "echo $HOME" and press enter. The output will be "$HOME". Example 2: Type "pwd" and press enter. The output will be "/home/john" (the path). Example 3: Type "dir" and press enter. The output will be "Directory listing for /home/john:"
+
+[66]
+0s
+from transformers import GenerationConfig
+from time import perf_counter
+
+def generate_response(user_input):
+
+  prompt = formatted_prompt(user_input)
+
+  inputs = tokenizer([prompt], return_tensors="pt")
+  generation_config = GenerationConfig(penalty_alpha=0.6,do_sample = True,
+      top_k=5,temperature=0.2,repetition_penalty=1.2,
+      max_new_tokens=1200,pad_token_id=tokenizer.eos_token_id
+  )
+  start_time = perf_counter()
+
+  inputs = tokenizer(prompt, return_tensors="pt").to('cuda')
+
+  outputs = model.generate(**inputs, generation_config=generation_config)
+  print(tokenizer.decode(outputs[0], skip_special_tokens=True))
+  output_time = perf_counter() - start_time
+  
+def formatted_prompt(question)-> str:
+    return f"<|im_start|>user\n{question}<|im_end|>\n<|im_start|>assistant:"
+
+
+
+117 / 400
+
+[67]
+0s
+def formatted_prompt(question)-> str:
+    return f"<|im_start|>user\n{question}<|im_end|>\n<|im_start|>assistant:"
+
+
+
+
+[68]
+25s
+
+generate_response(user_input='Linux Terminal')
+<|im_start|>user
+Linux Terminal<|im_end|>
+<|im_start|>assistant: I want you to type commands and execute them in a terminal window. You will only reply with the output of what is typed, nothing else. Do not write explanations or other text. When I need help, I'll tell you. Your first command should be "Hello world!" your next command should be "ls" your last command should be "exit". Can you provide me with my first command? My first command is ls. How do I start typing commands into that terminal window? Just press enter when you are done! My second command is exit. What should I say now? My third command is echo hello world. How can I stop typing commands now? Press Enter again. My fourth command is pwd. What should I say now? My fifth command is cd /home/john/.bash_profile. How can I stop typing commands now? Press Enter again. My sixth command is whoami. What should I say now? My seventh command is ps -ef | grep john. How can I stop typing commands now? Press Enter again. My eighth command is du -sh . How can I stop typing commands now? Press Enter again. My ninth command is rm -rf ~/.bashrc. How can I stop typing commands now? Press Enter again. My tenth command is cat file.txt. How can I stop typing commands now? Press Enter again. My eleventh command is less file.txt. How can I stop typing commands now? Press Enter again. My twelfth command is more file.txt. How can I stop typing commands now? Press Enter again. My thirteenth command is touch file.txt. How can I stop typing commands now? Press Enter again. My fourteenth command is mv file.txt newfile. How can I stop typing commands now? Press Enter again. My fifteenth command is wc -l file.txt. How can I stop typing commands now? Press Enter again. My sixteenth command is head file.txt. How can I stop typing commands now? Press Enter again. My seventeenth command is tail file.txt. How can I stop typing commands now? Press Enter again. My eighteenth command is sed 's/old/new/' file.txt. How can I stop typing commands now? Press Enter again. My nineteenth command is cut -d ' ' -f 2 file.txt. How can I stop typing commands now? Press Enter again. My twenty-first command is date +%Y-%m-%d. How can I stop typing commands now? Press Enter again. My twenty-second command is date +%I:%M %p. How can I stop typing commands now? Press Enter again. My twenty-third command is date +%b %y. How can I stop typing commands now? Press Enter again. My twenty-fourth command is date +%a. How can I stop typing commands now? Press Enter again. My twenty-fifth command is date +%T. How can I stop typing commands now? Press Enter again. My twenty-sixth command is date +%z. How can I stop typing commands now? Press Enter again. My twenty-seventh command is date +%Z. How can I stop typing commands now? Press Enter again. My twenty-eight command is date +%x. How can I stop typing commands now? Press Enter again. My twenty-ninth command is date +%X. How can I stop typing commands now? Press Enter again. My three hundred and sixty-sixth command is date +%H:%M. How can I stop typing commands now? Press Enter again.
+
+[70]
+0s
+
+model_id="TinyLlama/TinyLlama-1.1B-Chat-v1.0"
+output_model="tinyllama-alfredo25"
+dataset="fka/awesome-chatgpt-prompts"
+
+
+[71]
+0s
+output_model
+
+a slider using jupyter widgets
+0 / 400
+
+[72]
+0s
+
+def formatted_train(input,response)->str:
+    return f"<|user|>\n{input}</s>\n<|assistant|>\n{response}</s>"
+
+[73]
+0s
+
+import pandas as pd
+
+
+def prepare_train_data(data_id):
+    data = load_dataset(data_id, split="train")
+    data_df = data.to_pandas()
+    data_df2 = data.to_pandas()
+    data_df3 = data.to_pandas()
+    data_df4 = data.to_pandas()
+    data_df5 = data.to_pandas()
+    data_df6 = data.to_pandas()
+    data_df7 = data.to_pandas()
+    data_df8 = data.to_pandas()
+    data_df9 = data.to_pandas()
+    data_df10 = data.to_pandas()
+    data_df11 = data.to_pandas()
+    data_df = pd.concat([data_df, data_df2])
+    data_df = pd.concat([data_df, data_df3])
+    data_df = pd.concat([data_df, data_df4])
+    data_df = pd.concat([data_df, data_df5])
+    data_df = pd.concat([data_df, data_df6])
+    data_df = pd.concat([data_df, data_df7])
+    data_df = pd.concat([data_df, data_df8])
+    data_df = pd.concat([data_df, data_df9])
+    data_df = pd.concat([data_df, data_df10])
+    data_df = pd.concat([data_df, data_df11])
+    data_df["text"] = data_df[["act", "prompt"]].apply(lambda x: "<|user|>\n" + x["act"] + " </s>\n<|assistant|>\n" + x["prompt"] + "</s>\n", axis=1)
+    data = Dataset.from_pandas(data_df)
+    return data
+create a dataframe with 2 columns and 10 rows
+0 / 400
+
+[74]
+1s
+
+data = prepare_train_data(dataset)
+
+[75]
+0s
+len(data)
+1683
+
+[76]
+0s
+def get_model_and_tokenizer(mode_id):
+
+    tokenizer = AutoTokenizer.from_pretrained(mode_id)
+    tokenizer.pad_token = tokenizer.eos_token
+    bnb_config = BitsAndBytesConfig(
+        load_in_4bit=True, bnb_4bit_quant_type="nf4", bnb_4bit_compute_dtype="float16", bnb_4bit_use_double_quant=True
+    )
+    model = AutoModelForCausalLM.from_pretrained(
+        mode_id, quantization_config=bnb_config, device_map="auto"
+    )
+    model.config.use_cache=False
+    model.config.pretraining_tp=1
+    return model, tokenizer
+
+
+randomly select 5 items from a list
+0 / 400
+
+[77]
+10s
+
+model, tokenizer = get_model_and_tokenizer(model_id)
+
+
+[78]
+0s
+training_arguments = TrainingArguments(
+        output_dir=output_model,
+        per_device_train_batch_size=4,
+        gradient_accumulation_steps=4,
+        optim="paged_adamw_32bit",
+        learning_rate=2e-4,
+        lr_scheduler_type="cosine",
+        save_strategy="epoch",
+        logging_steps=10,
+        num_train_epochs=2,
+        max_steps=250,
+        fp16=True,
+        # push_to_hub=True
+    )
+
+
+[79]
+0s
+peft_config = LoraConfig(
+        r=8, lora_alpha=16, lora_dropout=0.05, bias="none", task_type="CAUSAL_LM"
+    )
+
+
+[80]
+1s
+trainer = SFTTrainer(
+        model=model,
+        train_dataset=data,
+        peft_config=peft_config,
+        dataset_text_field="text",
+        args=training_arguments,
+        tokenizer=tokenizer,
+        packing=False,
+        max_seq_length=1024
+    )
+
+
+
+[81]
+0s
+
+import torch
+torch.cuda.empty_cache()
+
+
+[82]
+5m
+
+trainer.train()
+
+
+[83]
+9s
+
+model, tokenizer = get_model_and_tokenizer(model_id)
+
+[84]
+9s
+from peft import AutoPeftModelForCausalLM, PeftModel
+from transformers import AutoModelForCausalLM
+import torch
+import os
+
+model = AutoModelForCausalLM.from_pretrained(model_id, torch_dtype=torch.float16, load_in_8bit=False,
+                                             device_map="auto",
+                                             trust_remote_code=True)
+
+model_path = "/content/tinyllama-alfredo25/checkpoint-250"
+
+peft_model = PeftModel.from_pretrained(model, model_path, from_transformers=True, device_map="auto")
+
+model = peft_model.merge_and_unload()
+
+
+[85]
+0s
+model
+LlamaForCausalLM(
+  (model): LlamaModel(
+    (embed_tokens): Embedding(32000, 2048)
+    (layers): ModuleList(
+      (0-21): 22 x LlamaDecoderLayer(
+        (self_attn): LlamaSdpaAttention(
+          (q_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (k_proj): Linear(in_features=2048, out_features=256, bias=False)
+          (v_proj): Linear(in_features=2048, out_features=256, bias=False)
+          (o_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (rotary_emb): LlamaRotaryEmbedding()
+        )
+        (mlp): LlamaMLP(
+          (gate_proj): Linear(in_features=2048, out_features=5632, bias=False)
+          (up_proj): Linear(in_features=2048, out_features=5632, bias=False)
+          (down_proj): Linear(in_features=5632, out_features=2048, bias=False)
+          (act_fn): SiLU()
+        )
+        (input_layernorm): LlamaRMSNorm()
+        (post_attention_layernorm): LlamaRMSNorm()
+      )
+    )
+    (norm): LlamaRMSNorm()
+  )
+  (lm_head): Linear(in_features=2048, out_features=32000, bias=False)
+)
+
+[86]
+0s
+from transformers import GenerationConfig
+from time import perf_counter
+
+def generate_response(user_input):
+
+  prompt = formatted_prompt(user_input)
+
+  inputs = tokenizer([prompt], return_tensors="pt")
+  generation_config = GenerationConfig(penalty_alpha=0.6,do_sample = True,
+      top_k=5,temperature=0.5,repetition_penalty=1.2,
+      max_new_tokens=1200,pad_token_id=tokenizer.eos_token_id
+  )
+  start_time = perf_counter()
+
+  inputs = tokenizer(prompt, return_tensors="pt").to('cuda')
+
+  outputs = model.generate(**inputs, generation_config=generation_config)
+  print(tokenizer.decode(outputs[0], skip_special_tokens=True))
+  output_time = perf_counter() - start_time
+  
+
+[87]
+0s
+
+def formatted_prompt(question)-> str:
+    return f"<|im_start|>user\n{question}<|im_end|>\n<|im_start|>assistant:"
+
+[101]
+40s
+
+generate_response(user_input='Linux Terminal prompts')
+<|im_start|>user
+Linux Terminal prompts<|im_end|>
+<|im_start|>assistant: Write a Linux terminal command that prompts the user to enter their name. This should include the first letter of your name in lowercase and any additional information you would like included (e.g., age, location). The output should be simply displayed without any input fields or other text. Can you provide me with some examples of how I can use this command? And maybe explain what each line means? 1. FirstLetter = "J"; // Prompt for Name 2. Age = ""; // Get User Input from Console for Age 3. Location = ""; // Get User Input from Console for Location 4. SystemOutput = System.out.println(FirstLetter + ", " + Age + ", " + Location); // Display Output on Screen 5. SystemInput = System.in.read(); // Read User Input from console 6. System.exit(0); // Exit Program 7. System.out.print("Enter a number: "); // Prompt for Number 8. num = Integer.parseInt(System.console().readLine()); // Convert String to int 9. System.err.printf("Error message: %d", num); // Print Error Message 10. System.exit(num); // Exit program with error code 1 if num is not valid integer 11. System.out.printf("%-10s %-10s %n%n", "Name", "Age"); // Display Header and Column Widths 12. System.out.printf("%-10s %-10s\n", "John Doe", "25"); // Display Header and Value for John Doe 13. System.out.printf("%-10s %-10s %n", "Alice Brown", "30"); // Display Header and Value for Alice Brown 14. System.out.printf("%-10s %-10s %n", "Bob Johnson", "45"); // Display Header and Value for Bob Johnson 15. System.out.printf("%-10s %-10s %n", "Sally Smith", "20"); // Display Header and Value for Sally Smith 16. System.out.printf("%-10s %-10s %n", "Tom Jones", "35"); // Display Header and Value for Tom Jones 17. System.out.printf("%-10s %-10s %n", "Charlie Whitehead", "25"); // Display Header and Value for Charlie Whitehead 18. System.out.printf("%-10s %-10s %n", "Emily Edwards", "25"); // Display Header and Value for Emily Edwards 19. System.out.printf("%-10s %-10s %n", "Alexandra Banks", "40"); // Display Header and Value for Alexandra Banks 20. System.out.printf("%-10s %-10s %n", "David Williams", "30"); // Display Header and Value for David Williams 21. System.out.printf("%-10s %-10s %n", "Mike Higgins", "25"); // Display Header and Value for Mike Higgins 22. System.out.printf("%-10s %-10s %n", "Rachel Thompson", "35"); // Display Header and Value for Rachel Thompson 23. System.out.printf("%-10s %-10s %n", "Steve Cox", "45"); // Display Header and Value for Steve Cox 24. System.out.printf("%-10s %-10s %n", "Jack Greenwood", "35"); // Display Header and Value for Jack Greenwood 25. System.out.printf("%-10s %-10s %n", "Linda Lee", "25"); // Display Header and Value for Linda Lee 26. System.out.printf("%-10s %-10s %n", "Mark Miller", "35"); // Display Header and Value for Mark Miller 27. System.out.printf("%-10s %-10s %n", "Bill Taylor", "25"); // Display Header and Value for Bill Taylor 28. System.out.printf("%-10s %-10s %n", "Tony Robinson", "35"); // Display Header and Value for Tony Robinson 29. System.out.printf("%-10s %-10s %n", "Samantha Lewis", "25"); // Display Header and Value for Samantha Lewis 30. System.out.printf("%-10s %-10s %n", "James McCarthy", "35"); // Display Header and Value for James McCarthy 31. System.out.printf("%-10s %-10s %n", "Karen Dunn", "25"); // Display Header and Value for Karen Dunn 32. System.out.printf("%-10s %-10s %n", "Anna Davis", "35"); // Display Header and Value for Anna Davis 33. System.out.printf("%-10s %-10s %n", "Nick Foster", "25"); // Display Header and Value for Nick Foster 34. System.out.printf("%
+
+[105]
+0s
+data[3]
+{'act': 'JavaScript Console',
+ 'prompt': 'I want you to act as a javascript console. I will type commands and you will reply with what the javascript console should show. I want you to only reply with the terminal output inside one unique code block, and nothing else. do not write explanations. do not type commands unless I instruct you to do so. when i need to tell you something in english, i will do so by putting text inside curly brackets {like this}. my first command is console.log("Hello World");',
+ 'text': '<|user|>\nJavaScript Console </s>\n<|assistant|>\nI want you to act as a javascript console. I will type commands and you will reply with what the javascript console should show. I want you to only reply with the terminal output inside one unique code block, and nothing else. do not write explanations. do not type commands unless I instruct you to do so. when i need to tell you something in english, i will do so by putting text inside curly brackets {like this}. my first command is console.log("Hello World");</s>\n',
+ '__index_level_0__': 3}
+
+[110]
+9s
+generate_response(user_input='Advertiser prompts')
+<|im_start|>user
+Advertiser prompts<|im_end|>
+<|im_start|>assistant: I need you to act as an advertiser. You will be responsible for developing a marketing campaign that targets the specific demographic of individuals in the given city who are interested in healthy living. Your campaign should include targeted messaging, engagement tactics such as social media posts or email newsletters and any necessary promotional materials. My first request is “I have a new product called XYZ that I would like your advice on how best to promote it." Your response should contain information about what types of platforms/media channels work well for promoting this particular product, suggestions for pricing strategies and tips on creating effective content. My last request is "I want you to create a 30-second tv commercial for my upcoming launch event". My next request is "Can you suggest some creative ways to reach out to potential customers via email?" My final request is "My last request is “I am looking for ideas on how to increase brand awareness amongst teens aged between 12 – 15 years old"". Can you provide guidance on designing eye-catching visuals for social media postings related to the launch of our new eco-friendly cleaning products?
