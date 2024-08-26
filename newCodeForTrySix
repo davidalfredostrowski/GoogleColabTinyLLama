@@ -1,0 +1,33 @@
+
+import pandas as pd
+
+
+def prepare_train_data(data_id):
+    data = load_dataset(data_id, split="train")
+    data_df = data.to_pandas()
+    data_df2 = data.to_pandas()
+    data_df3 = data.to_pandas()
+    data_df4 = data.to_pandas()
+    data_df5 = data.to_pandas()
+    data_df6 = data.to_pandas()
+    data_df7 = data.to_pandas()
+    data_df8 = data.to_pandas()
+    data_df9 = data.to_pandas()
+    data_df10 = data.to_pandas()
+    data_df11 = data.to_pandas()
+    data_df12 = data.to_pandas()
+    data_df = pd.concat([data_df, data_df2])
+    data_df = pd.concat([data_df, data_df3])
+    data_df = pd.concat([data_df, data_df4])
+    data_df = pd.concat([data_df, data_df5])
+    data_df = pd.concat([data_df, data_df6])
+    data_df = pd.concat([data_df, data_df7])
+    data_df = pd.concat([data_df, data_df8])
+    data_df = pd.concat([data_df, data_df9])
+    data_df = pd.concat([data_df, data_df10])
+    for i in range(1000):
+        data_df = pd.concat([data_df, data_df11])
+    data_df["text"] = data_df[["act", "prompt"]].apply(lambda x: "<|user|>\n" + x["act"] + " </s>\n<|assistant|>\n" + x["prompt"] + "</s>\n", axis=1)
+    data = Dataset.from_pandas(data_df)
+    return data
+
