@@ -1,0 +1,653 @@
+[1]
+10s
+!pip install -U bitsandbytes
+Collecting bitsandbytes
+  Downloading bitsandbytes-0.43.3-py3-none-manylinux_2_24_x86_64.whl.metadata (3.5 kB)
+Requirement already satisfied: torch in /usr/local/lib/python3.10/dist-packages (from bitsandbytes) (2.4.0+cu121)
+Requirement already satisfied: numpy in /usr/local/lib/python3.10/dist-packages (from bitsandbytes) (1.26.4)
+Requirement already satisfied: filelock in /usr/local/lib/python3.10/dist-packages (from torch->bitsandbytes) (3.15.4)
+Requirement already satisfied: typing-extensions>=4.8.0 in /usr/local/lib/python3.10/dist-packages (from torch->bitsandbytes) (4.12.2)
+Requirement already satisfied: sympy in /usr/local/lib/python3.10/dist-packages (from torch->bitsandbytes) (1.13.2)
+Requirement already satisfied: networkx in /usr/local/lib/python3.10/dist-packages (from torch->bitsandbytes) (3.3)
+Requirement already satisfied: jinja2 in /usr/local/lib/python3.10/dist-packages (from torch->bitsandbytes) (3.1.4)
+Requirement already satisfied: fsspec in /usr/local/lib/python3.10/dist-packages (from torch->bitsandbytes) (2024.6.1)
+Requirement already satisfied: MarkupSafe>=2.0 in /usr/local/lib/python3.10/dist-packages (from jinja2->torch->bitsandbytes) (2.1.5)
+Requirement already satisfied: mpmath<1.4,>=1.1.0 in /usr/local/lib/python3.10/dist-packages (from sympy->torch->bitsandbytes) (1.3.0)
+Downloading bitsandbytes-0.43.3-py3-none-manylinux_2_24_x86_64.whl (137.5 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 137.5/137.5 MB 7.4 MB/s eta 0:00:00
+Installing collected packages: bitsandbytes
+Successfully installed bitsandbytes-0.43.3
+
+[2]
+30s
+!pip install --extra-index-url=https://pypi.nvidia.com cudf-cu12==24.6.*
+Looking in indexes: https://pypi.org/simple, https://pypi.nvidia.com
+Collecting cudf-cu12==24.6.*
+  Downloading https://pypi.nvidia.com/cudf-cu12/cudf_cu12-24.6.1-cp310-cp310-manylinux_2_28_x86_64.whl (478.0 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 478.0/478.0 MB 3.5 MB/s eta 0:00:00
+Requirement already satisfied: cachetools in /usr/local/lib/python3.10/dist-packages (from cudf-cu12==24.6.*) (5.5.0)
+Requirement already satisfied: cuda-python<13.0a0,>=12.0 in /usr/local/lib/python3.10/dist-packages (from cudf-cu12==24.6.*) (12.2.1)
+Requirement already satisfied: cupy-cuda12x>=12.0.0 in /usr/local/lib/python3.10/dist-packages (from cudf-cu12==24.6.*) (12.2.0)
+Requirement already satisfied: fsspec>=0.6.0 in /usr/local/lib/python3.10/dist-packages (from cudf-cu12==24.6.*) (2024.6.1)
+Requirement already satisfied: numba>=0.57 in /usr/local/lib/python3.10/dist-packages (from cudf-cu12==24.6.*) (0.60.0)
+Requirement already satisfied: numpy<2.0a0,>=1.23 in /usr/local/lib/python3.10/dist-packages (from cudf-cu12==24.6.*) (1.26.4)
+Requirement already satisfied: nvtx>=0.2.1 in /usr/local/lib/python3.10/dist-packages (from cudf-cu12==24.6.*) (0.2.10)
+Requirement already satisfied: packaging in /usr/local/lib/python3.10/dist-packages (from cudf-cu12==24.6.*) (24.1)
+Requirement already satisfied: pandas<2.2.3dev0,>=2.0 in /usr/local/lib/python3.10/dist-packages (from cudf-cu12==24.6.*) (2.1.4)
+Requirement already satisfied: pynvjitlink-cu12 in /usr/local/lib/python3.10/dist-packages (from cudf-cu12==24.6.*) (0.3.0)
+Collecting pyarrow<16.2.0a0,>=16.1.0 (from cudf-cu12==24.6.*)
+  Downloading pyarrow-16.1.0-cp310-cp310-manylinux_2_28_x86_64.whl.metadata (3.0 kB)
+Requirement already satisfied: rich in /usr/local/lib/python3.10/dist-packages (from cudf-cu12==24.6.*) (13.8.0)
+Collecting rmm-cu12==24.6.* (from cudf-cu12==24.6.*)
+  Downloading https://pypi.nvidia.com/rmm-cu12/rmm_cu12-24.6.0-cp310-cp310-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (1.7 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.7/1.7 MB 75.2 MB/s eta 0:00:00
+Requirement already satisfied: typing_extensions>=4.0.0 in /usr/local/lib/python3.10/dist-packages (from cudf-cu12==24.6.*) (4.12.2)
+Requirement already satisfied: cython in /usr/local/lib/python3.10/dist-packages (from cuda-python<13.0a0,>=12.0->cudf-cu12==24.6.*) (3.0.11)
+Requirement already satisfied: fastrlock>=0.5 in /usr/local/lib/python3.10/dist-packages (from cupy-cuda12x>=12.0.0->cudf-cu12==24.6.*) (0.8.2)
+Requirement already satisfied: llvmlite<0.44,>=0.43.0dev0 in /usr/local/lib/python3.10/dist-packages (from numba>=0.57->cudf-cu12==24.6.*) (0.43.0)
+Requirement already satisfied: python-dateutil>=2.8.2 in /usr/local/lib/python3.10/dist-packages (from pandas<2.2.3dev0,>=2.0->cudf-cu12==24.6.*) (2.8.2)
+Requirement already satisfied: pytz>=2020.1 in /usr/local/lib/python3.10/dist-packages (from pandas<2.2.3dev0,>=2.0->cudf-cu12==24.6.*) (2024.1)
+Requirement already satisfied: tzdata>=2022.1 in /usr/local/lib/python3.10/dist-packages (from pandas<2.2.3dev0,>=2.0->cudf-cu12==24.6.*) (2024.1)
+Requirement already satisfied: markdown-it-py>=2.2.0 in /usr/local/lib/python3.10/dist-packages (from rich->cudf-cu12==24.6.*) (3.0.0)
+Requirement already satisfied: pygments<3.0.0,>=2.13.0 in /usr/local/lib/python3.10/dist-packages (from rich->cudf-cu12==24.6.*) (2.16.1)
+Requirement already satisfied: mdurl~=0.1 in /usr/local/lib/python3.10/dist-packages (from markdown-it-py>=2.2.0->rich->cudf-cu12==24.6.*) (0.1.2)
+Requirement already satisfied: six>=1.5 in /usr/local/lib/python3.10/dist-packages (from python-dateutil>=2.8.2->pandas<2.2.3dev0,>=2.0->cudf-cu12==24.6.*) (1.16.0)
+Downloading pyarrow-16.1.0-cp310-cp310-manylinux_2_28_x86_64.whl (40.8 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 40.8/40.8 MB 20.9 MB/s eta 0:00:00
+Installing collected packages: pyarrow, rmm-cu12, cudf-cu12
+  Attempting uninstall: pyarrow
+    Found existing installation: pyarrow 14.0.2
+    Uninstalling pyarrow-14.0.2:
+      Successfully uninstalled pyarrow-14.0.2
+  Attempting uninstall: rmm-cu12
+    Found existing installation: rmm-cu12 24.4.0
+    Uninstalling rmm-cu12-24.4.0:
+      Successfully uninstalled rmm-cu12-24.4.0
+  Attempting uninstall: cudf-cu12
+    Found existing installation: cudf-cu12 24.4.1
+    Uninstalling cudf-cu12-24.4.1:
+      Successfully uninstalled cudf-cu12-24.4.1
+ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+ibis-framework 8.0.0 requires pyarrow<16,>=2, but you have pyarrow 16.1.0 which is incompatible.
+Successfully installed cudf-cu12-24.6.1 pyarrow-16.1.0 rmm-cu12-24.6.0
+print hello world using rot13
+0 / 400
+
+[3]
+6s
+!pip install auto-gptq
+Collecting auto-gptq
+  Downloading auto_gptq-0.7.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (18 kB)
+Requirement already satisfied: accelerate>=0.26.0 in /usr/local/lib/python3.10/dist-packages (from auto-gptq) (0.32.1)
+Collecting datasets (from auto-gptq)
+  Downloading datasets-2.21.0-py3-none-any.whl.metadata (21 kB)
+Requirement already satisfied: sentencepiece in /usr/local/lib/python3.10/dist-packages (from auto-gptq) (0.1.99)
+Requirement already satisfied: numpy in /usr/local/lib/python3.10/dist-packages (from auto-gptq) (1.26.4)
+Collecting rouge (from auto-gptq)
+  Downloading rouge-1.0.1-py3-none-any.whl.metadata (4.1 kB)
+Collecting gekko (from auto-gptq)
+  Downloading gekko-1.2.1-py3-none-any.whl.metadata (3.0 kB)
+Requirement already satisfied: torch>=1.13.0 in /usr/local/lib/python3.10/dist-packages (from auto-gptq) (2.4.0+cu121)
+Requirement already satisfied: safetensors in /usr/local/lib/python3.10/dist-packages (from auto-gptq) (0.4.4)
+Requirement already satisfied: transformers>=4.31.0 in /usr/local/lib/python3.10/dist-packages (from auto-gptq) (4.42.4)
+Collecting peft>=0.5.0 (from auto-gptq)
+  Downloading peft-0.12.0-py3-none-any.whl.metadata (13 kB)
+Requirement already satisfied: tqdm in /usr/local/lib/python3.10/dist-packages (from auto-gptq) (4.66.5)
+Requirement already satisfied: packaging>=20.0 in /usr/local/lib/python3.10/dist-packages (from accelerate>=0.26.0->auto-gptq) (24.1)
+Requirement already satisfied: psutil in /usr/local/lib/python3.10/dist-packages (from accelerate>=0.26.0->auto-gptq) (5.9.5)
+Requirement already satisfied: pyyaml in /usr/local/lib/python3.10/dist-packages (from accelerate>=0.26.0->auto-gptq) (6.0.2)
+Requirement already satisfied: huggingface-hub in /usr/local/lib/python3.10/dist-packages (from accelerate>=0.26.0->auto-gptq) (0.23.5)
+Requirement already satisfied: filelock in /usr/local/lib/python3.10/dist-packages (from torch>=1.13.0->auto-gptq) (3.15.4)
+Requirement already satisfied: typing-extensions>=4.8.0 in /usr/local/lib/python3.10/dist-packages (from torch>=1.13.0->auto-gptq) (4.12.2)
+Requirement already satisfied: sympy in /usr/local/lib/python3.10/dist-packages (from torch>=1.13.0->auto-gptq) (1.13.2)
+Requirement already satisfied: networkx in /usr/local/lib/python3.10/dist-packages (from torch>=1.13.0->auto-gptq) (3.3)
+Requirement already satisfied: jinja2 in /usr/local/lib/python3.10/dist-packages (from torch>=1.13.0->auto-gptq) (3.1.4)
+Requirement already satisfied: fsspec in /usr/local/lib/python3.10/dist-packages (from torch>=1.13.0->auto-gptq) (2024.6.1)
+Requirement already satisfied: regex!=2019.12.17 in /usr/local/lib/python3.10/dist-packages (from transformers>=4.31.0->auto-gptq) (2024.5.15)
+Requirement already satisfied: requests in /usr/local/lib/python3.10/dist-packages (from transformers>=4.31.0->auto-gptq) (2.32.3)
+Requirement already satisfied: tokenizers<0.20,>=0.19 in /usr/local/lib/python3.10/dist-packages (from transformers>=4.31.0->auto-gptq) (0.19.1)
+Requirement already satisfied: pyarrow>=15.0.0 in /usr/local/lib/python3.10/dist-packages (from datasets->auto-gptq) (16.1.0)
+Collecting dill<0.3.9,>=0.3.0 (from datasets->auto-gptq)
+  Downloading dill-0.3.8-py3-none-any.whl.metadata (10 kB)
+Requirement already satisfied: pandas in /usr/local/lib/python3.10/dist-packages (from datasets->auto-gptq) (2.1.4)
+Collecting xxhash (from datasets->auto-gptq)
+  Downloading xxhash-3.5.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (12 kB)
+Collecting multiprocess (from datasets->auto-gptq)
+  Downloading multiprocess-0.70.16-py310-none-any.whl.metadata (7.2 kB)
+Requirement already satisfied: aiohttp in /usr/local/lib/python3.10/dist-packages (from datasets->auto-gptq) (3.10.5)
+Requirement already satisfied: six in /usr/local/lib/python3.10/dist-packages (from rouge->auto-gptq) (1.16.0)
+Requirement already satisfied: aiohappyeyeballs>=2.3.0 in /usr/local/lib/python3.10/dist-packages (from aiohttp->datasets->auto-gptq) (2.4.0)
+Requirement already satisfied: aiosignal>=1.1.2 in /usr/local/lib/python3.10/dist-packages (from aiohttp->datasets->auto-gptq) (1.3.1)
+Requirement already satisfied: attrs>=17.3.0 in /usr/local/lib/python3.10/dist-packages (from aiohttp->datasets->auto-gptq) (24.2.0)
+Requirement already satisfied: frozenlist>=1.1.1 in /usr/local/lib/python3.10/dist-packages (from aiohttp->datasets->auto-gptq) (1.4.1)
+Requirement already satisfied: multidict<7.0,>=4.5 in /usr/local/lib/python3.10/dist-packages (from aiohttp->datasets->auto-gptq) (6.0.5)
+Requirement already satisfied: yarl<2.0,>=1.0 in /usr/local/lib/python3.10/dist-packages (from aiohttp->datasets->auto-gptq) (1.9.4)
+Requirement already satisfied: async-timeout<5.0,>=4.0 in /usr/local/lib/python3.10/dist-packages (from aiohttp->datasets->auto-gptq) (4.0.3)
+Requirement already satisfied: charset-normalizer<4,>=2 in /usr/local/lib/python3.10/dist-packages (from requests->transformers>=4.31.0->auto-gptq) (3.3.2)
+Requirement already satisfied: idna<4,>=2.5 in /usr/local/lib/python3.10/dist-packages (from requests->transformers>=4.31.0->auto-gptq) (3.8)
+Requirement already satisfied: urllib3<3,>=1.21.1 in /usr/local/lib/python3.10/dist-packages (from requests->transformers>=4.31.0->auto-gptq) (2.0.7)
+Requirement already satisfied: certifi>=2017.4.17 in /usr/local/lib/python3.10/dist-packages (from requests->transformers>=4.31.0->auto-gptq) (2024.7.4)
+Requirement already satisfied: MarkupSafe>=2.0 in /usr/local/lib/python3.10/dist-packages (from jinja2->torch>=1.13.0->auto-gptq) (2.1.5)
+Requirement already satisfied: python-dateutil>=2.8.2 in /usr/local/lib/python3.10/dist-packages (from pandas->datasets->auto-gptq) (2.8.2)
+Requirement already satisfied: pytz>=2020.1 in /usr/local/lib/python3.10/dist-packages (from pandas->datasets->auto-gptq) (2024.1)
+Requirement already satisfied: tzdata>=2022.1 in /usr/local/lib/python3.10/dist-packages (from pandas->datasets->auto-gptq) (2024.1)
+Requirement already satisfied: mpmath<1.4,>=1.1.0 in /usr/local/lib/python3.10/dist-packages (from sympy->torch>=1.13.0->auto-gptq) (1.3.0)
+Downloading auto_gptq-0.7.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (23.5 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 23.5/23.5 MB 89.1 MB/s eta 0:00:00
+Downloading peft-0.12.0-py3-none-any.whl (296 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 296.4/296.4 kB 27.0 MB/s eta 0:00:00
+Downloading datasets-2.21.0-py3-none-any.whl (527 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 527.3/527.3 kB 40.4 MB/s eta 0:00:00
+Downloading gekko-1.2.1-py3-none-any.whl (13.2 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 13.2/13.2 MB 104.8 MB/s eta 0:00:00
+Downloading rouge-1.0.1-py3-none-any.whl (13 kB)
+Downloading dill-0.3.8-py3-none-any.whl (116 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 116.3/116.3 kB 11.5 MB/s eta 0:00:00
+Downloading multiprocess-0.70.16-py310-none-any.whl (134 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 134.8/134.8 kB 13.5 MB/s eta 0:00:00
+Downloading xxhash-3.5.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (194 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 194.1/194.1 kB 18.8 MB/s eta 0:00:00
+Installing collected packages: xxhash, rouge, gekko, dill, multiprocess, datasets, peft, auto-gptq
+Successfully installed auto-gptq-0.7.1 datasets-2.21.0 dill-0.3.8 gekko-1.2.1 multiprocess-0.70.16 peft-0.12.0 rouge-1.0.1 xxhash-3.5.0
+
+[4]
+9s
+import pyarrow; print(f"{pyarrow.__version__=}")
+import cudf; print(f"{cudf.__version__=}")
+import auto_gptq; print(f"{auto_gptq.__version__=}")
+pyarrow.__version__='16.1.0'
+cudf.__version__='24.06.01'
+WARNING:auto_gptq.nn_modules.qlinear.qlinear_cuda:CUDA extension not installed.
+WARNING:auto_gptq.nn_modules.qlinear.qlinear_cuda_old:CUDA extension not installed.
+auto_gptq.__version__='0.7.1'
+
+[5]
+3s
+!pip install accelerate peft bitsandbytes transformers trl
+Requirement already satisfied: accelerate in /usr/local/lib/python3.10/dist-packages (0.32.1)
+Requirement already satisfied: peft in /usr/local/lib/python3.10/dist-packages (0.12.0)
+Requirement already satisfied: bitsandbytes in /usr/local/lib/python3.10/dist-packages (0.43.3)
+Requirement already satisfied: transformers in /usr/local/lib/python3.10/dist-packages (4.42.4)
+Collecting trl
+  Downloading trl-0.10.1-py3-none-any.whl.metadata (12 kB)
+Requirement already satisfied: numpy<2.0.0,>=1.17 in /usr/local/lib/python3.10/dist-packages (from accelerate) (1.26.4)
+Requirement already satisfied: packaging>=20.0 in /usr/local/lib/python3.10/dist-packages (from accelerate) (24.1)
+Requirement already satisfied: psutil in /usr/local/lib/python3.10/dist-packages (from accelerate) (5.9.5)
+Requirement already satisfied: pyyaml in /usr/local/lib/python3.10/dist-packages (from accelerate) (6.0.2)
+Requirement already satisfied: torch>=1.10.0 in /usr/local/lib/python3.10/dist-packages (from accelerate) (2.4.0+cu121)
+Requirement already satisfied: huggingface-hub in /usr/local/lib/python3.10/dist-packages (from accelerate) (0.23.5)
+Requirement already satisfied: safetensors>=0.3.1 in /usr/local/lib/python3.10/dist-packages (from accelerate) (0.4.4)
+Requirement already satisfied: tqdm in /usr/local/lib/python3.10/dist-packages (from peft) (4.66.5)
+Requirement already satisfied: filelock in /usr/local/lib/python3.10/dist-packages (from transformers) (3.15.4)
+Requirement already satisfied: regex!=2019.12.17 in /usr/local/lib/python3.10/dist-packages (from transformers) (2024.5.15)
+Requirement already satisfied: requests in /usr/local/lib/python3.10/dist-packages (from transformers) (2.32.3)
+Requirement already satisfied: tokenizers<0.20,>=0.19 in /usr/local/lib/python3.10/dist-packages (from transformers) (0.19.1)
+Requirement already satisfied: datasets in /usr/local/lib/python3.10/dist-packages (from trl) (2.21.0)
+Collecting tyro>=0.5.11 (from trl)
+  Downloading tyro-0.8.10-py3-none-any.whl.metadata (8.4 kB)
+Requirement already satisfied: fsspec>=2023.5.0 in /usr/local/lib/python3.10/dist-packages (from huggingface-hub->accelerate) (2024.6.1)
+Requirement already satisfied: typing-extensions>=3.7.4.3 in /usr/local/lib/python3.10/dist-packages (from huggingface-hub->accelerate) (4.12.2)
+Requirement already satisfied: sympy in /usr/local/lib/python3.10/dist-packages (from torch>=1.10.0->accelerate) (1.13.2)
+Requirement already satisfied: networkx in /usr/local/lib/python3.10/dist-packages (from torch>=1.10.0->accelerate) (3.3)
+Requirement already satisfied: jinja2 in /usr/local/lib/python3.10/dist-packages (from torch>=1.10.0->accelerate) (3.1.4)
+Requirement already satisfied: docstring-parser>=0.16 in /usr/local/lib/python3.10/dist-packages (from tyro>=0.5.11->trl) (0.16)
+Requirement already satisfied: rich>=11.1.0 in /usr/local/lib/python3.10/dist-packages (from tyro>=0.5.11->trl) (13.8.0)
+Collecting shtab>=1.5.6 (from tyro>=0.5.11->trl)
+  Downloading shtab-1.7.1-py3-none-any.whl.metadata (7.3 kB)
+Requirement already satisfied: pyarrow>=15.0.0 in /usr/local/lib/python3.10/dist-packages (from datasets->trl) (16.1.0)
+Requirement already satisfied: dill<0.3.9,>=0.3.0 in /usr/local/lib/python3.10/dist-packages (from datasets->trl) (0.3.8)
+Requirement already satisfied: pandas in /usr/local/lib/python3.10/dist-packages (from datasets->trl) (2.1.4)
+Requirement already satisfied: xxhash in /usr/local/lib/python3.10/dist-packages (from datasets->trl) (3.5.0)
+Requirement already satisfied: multiprocess in /usr/local/lib/python3.10/dist-packages (from datasets->trl) (0.70.16)
+Requirement already satisfied: aiohttp in /usr/local/lib/python3.10/dist-packages (from datasets->trl) (3.10.5)
+Requirement already satisfied: charset-normalizer<4,>=2 in /usr/local/lib/python3.10/dist-packages (from requests->transformers) (3.3.2)
+Requirement already satisfied: idna<4,>=2.5 in /usr/local/lib/python3.10/dist-packages (from requests->transformers) (3.8)
+Requirement already satisfied: urllib3<3,>=1.21.1 in /usr/local/lib/python3.10/dist-packages (from requests->transformers) (2.0.7)
+Requirement already satisfied: certifi>=2017.4.17 in /usr/local/lib/python3.10/dist-packages (from requests->transformers) (2024.7.4)
+Requirement already satisfied: aiohappyeyeballs>=2.3.0 in /usr/local/lib/python3.10/dist-packages (from aiohttp->datasets->trl) (2.4.0)
+Requirement already satisfied: aiosignal>=1.1.2 in /usr/local/lib/python3.10/dist-packages (from aiohttp->datasets->trl) (1.3.1)
+Requirement already satisfied: attrs>=17.3.0 in /usr/local/lib/python3.10/dist-packages (from aiohttp->datasets->trl) (24.2.0)
+Requirement already satisfied: frozenlist>=1.1.1 in /usr/local/lib/python3.10/dist-packages (from aiohttp->datasets->trl) (1.4.1)
+Requirement already satisfied: multidict<7.0,>=4.5 in /usr/local/lib/python3.10/dist-packages (from aiohttp->datasets->trl) (6.0.5)
+Requirement already satisfied: yarl<2.0,>=1.0 in /usr/local/lib/python3.10/dist-packages (from aiohttp->datasets->trl) (1.9.4)
+Requirement already satisfied: async-timeout<5.0,>=4.0 in /usr/local/lib/python3.10/dist-packages (from aiohttp->datasets->trl) (4.0.3)
+Requirement already satisfied: markdown-it-py>=2.2.0 in /usr/local/lib/python3.10/dist-packages (from rich>=11.1.0->tyro>=0.5.11->trl) (3.0.0)
+Requirement already satisfied: pygments<3.0.0,>=2.13.0 in /usr/local/lib/python3.10/dist-packages (from rich>=11.1.0->tyro>=0.5.11->trl) (2.16.1)
+Requirement already satisfied: MarkupSafe>=2.0 in /usr/local/lib/python3.10/dist-packages (from jinja2->torch>=1.10.0->accelerate) (2.1.5)
+Requirement already satisfied: python-dateutil>=2.8.2 in /usr/local/lib/python3.10/dist-packages (from pandas->datasets->trl) (2.8.2)
+Requirement already satisfied: pytz>=2020.1 in /usr/local/lib/python3.10/dist-packages (from pandas->datasets->trl) (2024.1)
+Requirement already satisfied: tzdata>=2022.1 in /usr/local/lib/python3.10/dist-packages (from pandas->datasets->trl) (2024.1)
+Requirement already satisfied: mpmath<1.4,>=1.1.0 in /usr/local/lib/python3.10/dist-packages (from sympy->torch>=1.10.0->accelerate) (1.3.0)
+Requirement already satisfied: mdurl~=0.1 in /usr/local/lib/python3.10/dist-packages (from markdown-it-py>=2.2.0->rich>=11.1.0->tyro>=0.5.11->trl) (0.1.2)
+Requirement already satisfied: six>=1.5 in /usr/local/lib/python3.10/dist-packages (from python-dateutil>=2.8.2->pandas->datasets->trl) (1.16.0)
+Downloading trl-0.10.1-py3-none-any.whl (280 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 280.1/280.1 kB 9.7 MB/s eta 0:00:00
+Downloading tyro-0.8.10-py3-none-any.whl (105 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 105.7/105.7 kB 9.2 MB/s eta 0:00:00
+Downloading shtab-1.7.1-py3-none-any.whl (14 kB)
+Installing collected packages: shtab, tyro, trl
+Successfully installed shtab-1.7.1 trl-0.10.1 tyro-0.8.10
+
+[6]
+0s
+from huggingface_hub import notebook_login
+notebook_login()
+
+
+[7]
+4s
+import torch
+from datasets import load_dataset, Dataset
+from peft import LoraConfig, AutoPeftModelForCausalLM
+from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig, TrainingArguments
+from trl import SFTTrainer
+import os
+
+[8]
+0s
+dataset="burkelibbey/colors"
+model_id="TinyLlama/TinyLlama-1.1B-Chat-v1.0"
+output_model="tinyllama-colorist-v1-alfred2"
+
+[9]
+0s
+def formatted_train(input,response)->str:
+    return f"<|user|>\n{input}</s>\n<|assistant|>\n{response}</s>"
+
+
+[10]
+0s
+def prepare_train_data(data_id):
+    data = load_dataset(data_id, split="train")
+    data_df = data.to_pandas()
+    data_df["text"] = data_df[["description", "color"]].apply(lambda x: "<|user|>\n" + x["description"] + "</s>\n<|assistant|>\n" + x["color"] + "</s>", axis=1)
+    data = Dataset.from_pandas(data_df)
+    return data
+
+[11]
+4s
+data = prepare_train_data(dataset)
+
+
+[12]
+0s
+data[0]
+{'color': '#000000',
+ 'description': 'Pure Black: A shade that completely absorbs light and does not reflect any colors. It is the darkest possible shade.',
+ 'text': '<|user|>\nPure Black: A shade that completely absorbs light and does not reflect any colors. It is the darkest possible shade.</s>\n<|assistant|>\n#000000</s>'}
+
+[13]
+0s
+data[1]
+{'color': '#000010',
+ 'description': 'Extremely dark blue: This is such a dark shade of blue, it is almost indistinguishable from black.',
+ 'text': '<|user|>\nExtremely dark blue: This is such a dark shade of blue, it is almost indistinguishable from black.</s>\n<|assistant|>\n#000010</s>'}
+
+[14]
+0s
+data
+Dataset({
+    features: ['color', 'description', 'text'],
+    num_rows: 33887
+})
+10 random numbers using numpy
+0 / 400
+
+[15]
+0s
+def get_model_and_tokenizer(mode_id):
+
+    tokenizer = AutoTokenizer.from_pretrained(mode_id)
+    tokenizer.pad_token = tokenizer.eos_token
+    bnb_config = BitsAndBytesConfig(
+        load_in_4bit=True, bnb_4bit_quant_type="nf4", bnb_4bit_compute_dtype="float16", bnb_4bit_use_double_quant=True
+    )
+    model = AutoModelForCausalLM.from_pretrained(
+        mode_id, quantization_config=bnb_config, device_map="auto"
+    )
+    model.config.use_cache=False
+    model.config.pretraining_tp=1
+    return model, tokenizer
+create a dataframe with 2 columns and 10 rows
+0 / 400
+
+[16]
+17s
+model, tokenizer = get_model_and_tokenizer(model_id)
+
+a slider using jupyter widgets
+0 / 400
+
+[17]
+0s
+peft_config = LoraConfig(
+        r=8, lora_alpha=16, lora_dropout=0.05, bias="none", task_type="CAUSAL_LM"
+    )
+
+[18]
+0s
+training_arguments = TrainingArguments(
+        output_dir=output_model,
+        per_device_train_batch_size=16,
+        gradient_accumulation_steps=4,
+        optim="paged_adamw_32bit",
+        learning_rate=2e-4,
+        lr_scheduler_type="cosine",
+        save_strategy="epoch",
+        logging_steps=10,
+        num_train_epochs=3,
+        max_steps=250,
+        fp16=True,
+        # push_to_hub=True
+    )
+
+[19]
+4s
+trainer = SFTTrainer(
+        model=model,
+        train_dataset=data,
+        peft_config=peft_config,
+        dataset_text_field="text",
+        args=training_arguments,
+        tokenizer=tokenizer,
+        packing=False,
+        max_seq_length=1024
+    )
+
+
+
+[20]
+10m
+trainer.train()
+
+
+[21]
+0s
+model
+LlamaForCausalLM(
+  (model): LlamaModel(
+    (embed_tokens): Embedding(32000, 2048)
+    (layers): ModuleList(
+      (0-21): 22 x LlamaDecoderLayer(
+        (self_attn): LlamaSdpaAttention(
+          (q_proj): lora.Linear4bit(
+            (base_layer): Linear4bit(in_features=2048, out_features=2048, bias=False)
+            (lora_dropout): ModuleDict(
+              (default): Dropout(p=0.05, inplace=False)
+            )
+            (lora_A): ModuleDict(
+              (default): Linear(in_features=2048, out_features=8, bias=False)
+            )
+            (lora_B): ModuleDict(
+              (default): Linear(in_features=8, out_features=2048, bias=False)
+            )
+            (lora_embedding_A): ParameterDict()
+            (lora_embedding_B): ParameterDict()
+            (lora_magnitude_vector): ModuleDict()
+          )
+          (k_proj): Linear4bit(in_features=2048, out_features=256, bias=False)
+          (v_proj): lora.Linear4bit(
+            (base_layer): Linear4bit(in_features=2048, out_features=256, bias=False)
+            (lora_dropout): ModuleDict(
+              (default): Dropout(p=0.05, inplace=False)
+            )
+            (lora_A): ModuleDict(
+              (default): Linear(in_features=2048, out_features=8, bias=False)
+            )
+            (lora_B): ModuleDict(
+              (default): Linear(in_features=8, out_features=256, bias=False)
+            )
+            (lora_embedding_A): ParameterDict()
+            (lora_embedding_B): ParameterDict()
+            (lora_magnitude_vector): ModuleDict()
+          )
+          (o_proj): Linear4bit(in_features=2048, out_features=2048, bias=False)
+          (rotary_emb): LlamaRotaryEmbedding()
+        )
+        (mlp): LlamaMLP(
+          (gate_proj): Linear4bit(in_features=2048, out_features=5632, bias=False)
+          (up_proj): Linear4bit(in_features=2048, out_features=5632, bias=False)
+          (down_proj): Linear4bit(in_features=5632, out_features=2048, bias=False)
+          (act_fn): SiLU()
+        )
+        (input_layernorm): LlamaRMSNorm()
+        (post_attention_layernorm): LlamaRMSNorm()
+      )
+    )
+    (norm): LlamaRMSNorm()
+  )
+  (lm_head): Linear(in_features=2048, out_features=32000, bias=False)
+)
+
+[22]
+4s
+from peft import AutoPeftModelForCausalLM, PeftModel
+from transformers import AutoModelForCausalLM
+import torch
+import os
+
+model = AutoModelForCausalLM.from_pretrained(model_id, torch_dtype=torch.float16, load_in_8bit=False,
+                                             device_map="auto",
+                                             trust_remote_code=True)
+
+model_path = "/content/tinyllama-colorist-v1-alfred2/checkpoint-250"
+
+peft_model = PeftModel.from_pretrained(model, model_path, from_transformers=True, device_map="auto")
+
+model = peft_model.merge_and_unload()
+
+[ ]
+
+Start coding or generate with AI.
+
+[ ]
+
+Start coding or generate with AI.
+
+[ ]
+
+Start coding or generate with AI.
+
+[23]
+0s
+def formatted_prompt(question)-> str:
+    return f"<|user|>\n{question}</s>\n<|assistant|>"
+10 random numbers using numpy
+0 / 400
+
+[24]
+0s
+def print_color_space(hex_color):
+    def hex_to_rgb(hex_color):
+        hex_color = hex_color.lstrip('#')
+        return tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))
+    r, g, b = hex_to_rgb(hex_color)
+    print(f'{hex_color}: \033[48;2;{r};{g};{b}m           \033[0m')
+
+[25]
+0s
+generate_response(user_input='Light Orange color')
+
+Next steps:
+
+[ ]
+
+Start coding or generate with AI.
+
+[26]
+0s
+from transformers import GenerationConfig
+from time import perf_counter
+
+def generate_response(user_input):
+
+  prompt = formatted_prompt(user_input)
+
+  inputs = tokenizer([prompt], return_tensors="pt")
+  generation_config = GenerationConfig(penalty_alpha=0.6,do_sample = True,
+      top_k=5,temperature=0.5,repetition_penalty=1.2,
+      max_new_tokens=12,pad_token_id=tokenizer.eos_token_id
+  )
+  start_time = perf_counter()
+
+  inputs = tokenizer(prompt, return_tensors="pt").to('cuda')
+
+  outputs = model.generate(**inputs, generation_config=generation_config)
+  print(tokenizer.decode(outputs[0], skip_special_tokens=True))
+  output_time = perf_counter() - start_time
+  print(f"Time taken for inference: {round(output_time,2)} seconds")
+
+
+[27]
+1s
+generate_response(user_input='Light Orange color')
+<|user|>
+Light Orange color 
+<|assistant|>
+#ffd080 : This is a light
+Time taken for inference: 0.91 seconds
+
+[28]
+0s
+print_color_space("ffd080")
+ffd080:            
+
+[29]
+3s
+from peft import AutoPeftModelForCausalLM, PeftModel
+from transformers import AutoModelForCausalLM
+import torch
+import os
+
+model = AutoModelForCausalLM.from_pretrained(model_id, torch_dtype=torch.float16, load_in_8bit=False,
+                                             device_map="auto",
+                                             trust_remote_code=True)
+
+model_path = "/content/tinyllama-colorist-v1-alfred2/checkpoint-250"
+
+peft_model = PeftModel.from_pretrained(model, model_path, from_transformers=True, device_map="auto")
+
+model2 = peft_model.merge_and_unload()
+
+[30]
+0s
+from transformers import GenerationConfig
+from time import perf_counter
+
+def generate_response2(user_input):
+
+  prompt = formatted_prompt(user_input)
+
+  inputs = tokenizer([prompt], return_tensors="pt")
+  generation_config = GenerationConfig(penalty_alpha=0.6,do_sample = True,
+      top_k=5,temperature=0.5,repetition_penalty=1.2,
+      max_new_tokens=12,pad_token_id=tokenizer.eos_token_id
+  )
+  start_time = perf_counter()
+
+  inputs = tokenizer(prompt, return_tensors="pt").to('cuda')
+
+  outputs = model2.generate(**inputs, generation_config=generation_config)
+  print(tokenizer.decode(outputs[0], skip_special_tokens=True))
+  output_time = perf_counter() - start_time
+  print(f"Time taken for inference: {round(output_time,2)} seconds")
+
+
+[31]
+0s
+generate_response2(user_input='Light Orange color')
+<|user|>
+Light Orange color 
+<|assistant|>
+#ffd080 : This is a light
+Time taken for inference: 0.56 seconds
+
+[32]
+0s
+generate_response2(user_input='Light Orange color')
+<|user|>
+Light Orange color 
+<|assistant|>
+#ee8066 : This is a v
+Time taken for inference: 0.38 seconds
+
+[33]
+0s
+generate_response(user_input='Light Blue color')
+<|user|>
+Light Blue color 
+<|assistant|>
+#709fcc | #406
+Time taken for inference: 0.38 seconds
+
+[34]
+0s
+print_color_space("#709fcc")
+#709fcc:            
+
+[35]
+4s
+from peft import AutoPeftModelForCausalLM, PeftModel
+from transformers import AutoModelForCausalLM
+import torch
+import os
+
+model3 = AutoModelForCausalLM.from_pretrained(model_id, torch_dtype=torch.float16, load_in_8bit=False,
+                                             device_map="auto",
+                                             trust_remote_code=True)
+
+[36]
+0s
+from transformers import GenerationConfig
+from time import perf_counter
+
+def generate_response3(user_input):
+
+  prompt = formatted_prompt(user_input)
+
+  inputs = tokenizer([prompt], return_tensors="pt")
+  generation_config = GenerationConfig(penalty_alpha=0.6,do_sample = True,
+      top_k=5,temperature=0.5,repetition_penalty=1.2,
+      max_new_tokens=12,pad_token_id=tokenizer.eos_token_id
+  )
+  start_time = perf_counter()
+
+  inputs = tokenizer(prompt, return_tensors="pt").to('cuda')
+
+  outputs = model3.generate(**inputs, generation_config=generation_config)
+  print(tokenizer.decode(outputs[0], skip_special_tokens=True))
+  output_time = perf_counter() - start_time
+  print(f"Time taken for inference: {round(output_time,2)} seconds")
+
+[37]
+0s
+generate_response3(user_input='Light Orange color')
+<|user|>
+Light Orange color 
+<|assistant|>
+Yes, the Light Orange color is a warm and inv
+Time taken for inference: 0.39 seconds
+
+[38]
+0s
+generate_response3(user_input='very dark blue')
+<|user|>
+very dark blue 
+<|assistant|>
+Yes, the color "dark blue" is a specific
+Time taken for inference: 0.39 seconds
+
+[39]
+0s
+generate_response(user_input='very dark blue')
+<|user|>
+very dark blue 
+<|assistant|>
+#10204050: This
+Time taken for inference: 0.38 seconds
+
+[40]
+0s
+print_color_space("10204050")
+
+10204050:            
